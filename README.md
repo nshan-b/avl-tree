@@ -8,5 +8,4 @@ Configure your CMake properly and build it however you want. It should spit out 
 TBA
 
 ## License
-Do you really need this? Haha
 [MIT](https://choosealicense.com/licenses/mit/)

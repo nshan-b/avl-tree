@@ -12,8 +12,14 @@ class AvlTree {
     private:
         AvlNode<T>* root;
         void insert(const T& d, AvlNode<T>*& n);
+        void remove(const T& d, AvlNode<T>*& n);
+
         void rotateRight(AvlNode<T>*& y);
         void rotateLeft(AvlNode<T>*& x);
+
+        AvlNode<T>* getMin(AvlNode<T>* n);
+        AvlNode<T>* getMax(AvlNode<T>* n);
+
         void balance(AvlNode<T>*& n);
         int height(AvlNode<T>* n);
     public:
@@ -42,6 +48,38 @@ void AvlTree<T>::insert(const T& d, AvlNode<T>*& n) {
     }
     else if (d > n->data) {
         insert(d, n->right);
+    }
+
+    balance(n);
+}
+
+template<class T>
+void AvlTree<T>::remove(const T& d, AvlNode<T>*& n) {
+    if (n == nullptr) {
+        return;
+    }
+
+    if (d < n->data) {
+        remove(x, n->left);
+    }
+    else if (d > n->data) {
+        remove(x, n->right);
+    }
+    // Remove node with two children
+    else if (n->left != nullptr && n->right != nullptr) {
+        n->data = findMin(n->right)->data;
+        remove(n->data, n->right);
+    }
+    // Remove node with one child
+    else {
+        AvlNode<T>* currentNode = n;
+        if (n->left != nullptr) {
+            n = n->left;
+        }
+        else {
+            n = n->right;
+        }
+        delete currentNode;
     }
 
     balance(n);
@@ -124,6 +162,28 @@ void AvlTree<T>::rotateLeft(AvlNode<T>*& x) {
     y->height = std::max(x->height, height(y->right)) + 1;
 
     x = y;
+}
+
+template <class T>
+AvlNode<T>* AvlTree<T>::getMin(AvlNode<T>* n) {
+    if (n == nullptr) {
+        return nullptr;
+    }
+    if (n->left == nullptr) {
+        return n;
+    }
+    return getMin(n->left);
+}
+
+template <class T>
+AvlNode<T>* AvlTree<T>::getMax(AvlNode<T>* n) {
+    if (n == nullptr) {
+        return nullptr;
+    }
+    if (n->right == nullptr) {
+        return n;
+    }
+    return getMax(n->right);
 }
 
 
