@@ -2,6 +2,8 @@
 /.vscode
 
 /build
+/build/*
+/_deps
 
 # Build results
 [Dd]ebug/

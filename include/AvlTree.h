@@ -25,6 +25,8 @@ class AvlTree {
     public:
         void add(T data);
         void add(std::vector<T> data);
+        void erase(T data);
+        void erase(std::vector<T> data);
         void print();
 };
 
@@ -201,6 +203,20 @@ void AvlTree<T>::add(std::vector<T> data) {
         insert(*it, root);
     }
 }
+
+template <class T>
+void AvlTree<T>::erase(T data) {
+    remove(data, root);
+}
+
+template <class T>
+void AvlTree<T>::erase(std::vector<T> data) {
+    for (auto it = data.begin(); it != data.end(); ++it) {
+        remove(*it, root);
+    }
+}
+
+
 
 template <class T>
 void AvlTree<T>::print() {
