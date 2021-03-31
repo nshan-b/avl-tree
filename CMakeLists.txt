@@ -2,12 +2,11 @@ cmake_minimum_required(VERSION 3.0.0)
 project(AVL VERSION 1.0)
 
 # include(CTest)
-# enable_testing()
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 
-include_directories(./include ./src)
+include_directories(./include ./src ./tests)
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -18,11 +17,16 @@ FetchContent_Declare(
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
-
-
 # add_compile_options(/Qspectre)
+
+
+# This is the main executable
 add_executable("${PROJECT_NAME}" ./src/main.cpp)
 
-# set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-# set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-# include(CPack)
+# Separate sanity checker g_test executable
+add_executable("${PROJECT_NAME}_test" ./tests/AVLTreeSanityCheck.cpp)
+
+enable_testing()
+target_link_libraries("${PROJECT_NAME}_test" gtest_main)
+include(GoogleTest)
+gtest_discover_tests("${PROJECT_NAME}_test")

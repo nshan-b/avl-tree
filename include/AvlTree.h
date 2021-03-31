@@ -6,6 +6,8 @@
 #include <iostream>
 #include <stack>
 #include <vector>
+#include <string>
+#include <sstream>
 
 template <class T>
 class AvlTree {
@@ -13,6 +15,7 @@ class AvlTree {
         AvlNode<T>* root;
         void insert(const T& d, AvlNode<T>*& n);
         void remove(const T& d, AvlNode<T>*& n);
+        long size;
 
         void rotateRight(AvlNode<T>*& y);
         void rotateLeft(AvlNode<T>*& x);
@@ -28,6 +31,8 @@ class AvlTree {
         void erase(T data);
         void erase(std::vector<T> data);
         void print();
+        std::string printStr(bool output);
+        long getSize();
 };
 
 template<class T>
@@ -44,6 +49,7 @@ template<class T>
 void AvlTree<T>::insert(const T& d, AvlNode<T>*& n) {
     if (n == nullptr) {
         n = new AvlNode<T>(d, nullptr, nullptr);
+        size++;
     }
     else if (d < n->data) {
         insert(d, n->left);
@@ -82,6 +88,7 @@ void AvlTree<T>::remove(const T& d, AvlNode<T>*& n) {
             n = n->right;
         }
         delete currentNode;
+        size--;
     }
 
     balance(n);
@@ -216,8 +223,6 @@ void AvlTree<T>::erase(std::vector<T> data) {
     }
 }
 
-
-
 template <class T>
 void AvlTree<T>::print() {
     std::stack<AvlNode<T>*> stack;
@@ -236,6 +241,54 @@ void AvlTree<T>::print() {
         current = current->right;
     }
     std::cout << std::endl;
+}
+
+template <class T>
+std::string AvlTree<T>::printStr(bool output) {
+    std::ostringstream s;
+    if (output) {
+        std::stack<AvlNode<T>*> stack;
+        AvlNode<T>* current = root;
+
+        while (current != nullptr || !stack.empty()) {
+            while (current != nullptr) {
+                stack.push(current);
+                current = current->left;
+            }
+            current = stack.top();
+            stack.pop();
+            
+            s << (current->data) << " ";
+            std::cout << current->data << " ";
+
+            current = current->right;
+        }
+        std::cout << std::endl;
+        return s.str();
+    }
+    else {
+        std::stack<AvlNode<T>*> stack;
+        AvlNode<T>* current = root;
+
+        while (current != nullptr || !stack.empty()) {
+            while (current != nullptr) {
+                stack.push(current);
+                current = current->left;
+            }
+            current = stack.top();
+            stack.pop();
+            
+            s << (current->data) << " ";
+            current = current->right;
+        }
+        return s.str();
+    }
+    
+}
+
+template <class T>
+long AvlTree<T>::getSize() {
+    return size;
 }
 
 #endif
