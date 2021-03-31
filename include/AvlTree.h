@@ -62,14 +62,14 @@ void AvlTree<T>::remove(const T& d, AvlNode<T>*& n) {
     }
 
     if (d < n->data) {
-        remove(x, n->left);
+        remove(d, n->left);
     }
     else if (d > n->data) {
-        remove(x, n->right);
+        remove(d, n->right);
     }
     // Remove node with two children
     else if (n->left != nullptr && n->right != nullptr) {
-        n->data = findMin(n->right)->data;
+        n->data = getMin(n->right)->data;
         remove(n->data, n->right);
     }
     // Remove node with one child
@@ -235,6 +235,7 @@ void AvlTree<T>::print() {
 
         current = current->right;
     }
+    std::cout << std::endl;
 }
 
 #endif
