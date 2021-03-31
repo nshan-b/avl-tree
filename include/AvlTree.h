@@ -246,6 +246,7 @@ void AvlTree<T>::print() {
 template <class T>
 std::string AvlTree<T>::printStr(bool output) {
     std::ostringstream s;
+    
     if (output) {
         std::stack<AvlNode<T>*> stack;
         AvlNode<T>* current = root;
