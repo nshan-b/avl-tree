@@ -5,8 +5,8 @@ This is a basic implementation of an AVL Tree.
 Configure your CMake properly and build it however you want. It should spit out in a build directory as an .exe / .out file for both main.cpp & AVLTreeSanityCheck.cpp.  
 
 ## Usage
-Filler code (at the moment) --> src/main.cpp 
-Tests --> tests/AVLTreeSanityCheck.cpp 
+Filler code (at the moment) --> src/main.cpp  
+Tests --> tests/AVLTreeSanityCheck.cpp  
 
 Both create separate executables: AVL.exe & AVL_test.exe.
 
